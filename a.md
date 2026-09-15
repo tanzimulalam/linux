@@ -6,6 +6,8 @@ HOW TO USE: every question/command is ONE line with its answer at the end.
   grep -i 'CMD' a.md               (all commands)
   grep -i 'WHY' a.md               (all why/concept answers)
 Tip: use -i (ignore case) and search a short, unusual phrase from the question.
+Tip: narrow down by piping two greps:  grep -i gz a.md | grep -i wc
+Tip: gz / compressed / decompress -> zcat, zless ; combined / total / all -> cat ... | wc -l
 
 ==================== Q - EASY ====================
 Q01 | Which command prints the directory you are currently in? | ANSWER: pwd - print working directory
@@ -139,6 +141,14 @@ CMD | less -N f | line numbers
 CMD | zless f.gz | page a compressed file
 CMD | zcat f.gz | head -3 | first 3 lines of gz without decompressing to disk
 CMD | zcat f.gz | wc -l | real line count of gz file
+CMD | zcat logs/*.log.gz | wc -l | total lines in ALL .gz files combined, without decompressing to disk
+CMD | zcat -f logs/*.log* | wc -l | total lines across .gz AND plain files combined
+CMD | zcat f.gz | tail -3 | last 3 lines of gz without decompressing to disk
+CMD | zcat f.gz | less | read a gz file without decompressing to disk
+CMD | cat logs/*.log | wc -l | total lines in all plain .log files combined
+CMD | wc -l logs/*.log | lines per file plus a total line at the bottom
+CMD | find logs -name "*.log.gz" -exec zcat {} + | wc -l | total lines of all gz files in a whole tree combined
+CMD | ls logs/*.log.gz | wc -l | how many .gz files (count files, not lines)
 CMD | cat -A f | show invisible chars: ^M carriage return, ^I tab, $ end of line
 CMD | dos2unix f.csv | fix Windows line endings
 CMD | sed -i 's/\r$//' f.csv | fix Windows line endings with sed
